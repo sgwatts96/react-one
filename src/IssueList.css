@@ -1,0 +1,34 @@
+.container1 {
+  margin-top: 50px;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex: auto;
+}
+
+.container1 table th{
+  display: table-header-group;
+  border: 1px solid lightgray;
+  background-color: #f6f8fa;
+  text-align: left;
+  padding-left: 1.25rem;
+}
+
+.container1 table td{
+  border: 1px solid lightgray;
+}
+
+.IssueList-tableHeader{
+  height: 3rem;
+  display: table-cell;
+  width: 60rem;
+  vertical-align: middle;
+  padding-left: 1.25rem;
+  font-weight: normal;
+  color: #586069;
+}
+
+.IssueList-tableHeader svg{
+  transform: translateY(.15rem);
+  padding-right: .5rem;
+}

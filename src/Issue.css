@@ -1,0 +1,83 @@
+.Issue-container {
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+    padding-left: .7rem;
+    padding-right: .7rem;
+    line-height: .2rem;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    margin-right: 0;
+}
+
+.Issue-container a{
+   color: #586069;
+   text-decoration: none;
+}
+
+.Issue-container a:hover{
+    color: blue;
+    fill: blue;
+}
+
+.Issue-title{
+    font-weight: bold;
+    padding-top: .25rem;
+}
+
+.Issue-title a{
+    font-size: 1.1rem;
+}
+
+.Issue-listDetails{
+    font-size: .8rem;
+    font-weight: normal;
+    color: #586069;
+}
+
+.Issue-cardInner{
+    display:flex;
+    flex-direction: column;
+    flex-grow: 2;
+    align-items: flex-start;
+    line-height: .5rem;
+    padding-top: .7rem;
+}
+
+.Issue-icon{
+    fill: #28a745;
+    padding-left: 0.5rem;
+    padding-right: 0.4rem;
+    flex-shrink: .01;
+    transform: translateY(.2rem);
+    padding-top: .7rem;
+}
+
+.Issue-commentsSection{
+    flex-direction: row;
+    flex-grow: .5;
+    align-self: flex-end;
+    line-height: 3rem;
+    text-align: right;
+}
+
+.Issue-commentsSection svg{
+    transform: translateY(-.4rem);
+    padding-right: .1rem;
+}
+
+.Issue-commentsSection span{
+    padding-bottom: 5rem;
+}
+
+.Issue-label{
+    padding-left: .5rem;
+    display: inline-block;
+}
+
+.Issue-labelInner{
+    padding: .3rem .3rem .3rem .3rem;
+    border-radius: .3rem;
+    font-size: .7rem;
+}

@@ -1,0 +1,17 @@
+div{
+	border: 1px solid black;
+}
+svg {
+	transform: translateY(.2rem);
+}
+.Inner{
+	display:table-cell;
+	padding-top: 2rem;
+}
+.Outer{
+	display: table;
+}
+
+.container{
+	display: flex;
+}
