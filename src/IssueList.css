@@ -32,3 +32,33 @@
   transform: translateY(.15rem);
   padding-right: .5rem;
 }
+
+.IssueList-tableHeaderItem {
+  display: inline-block;
+  padding-right: 1rem;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  font-size: 1rem;
+  background-color: transparent;
+  color: #586069;
+  outline: none;
+  text-decoration: none;
+  font-weight: normal;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:hover,
+button:focus {
+  font-weight: 700;
+}
+
+
+button:active {
+  font-weight: 700;
+  border: none;
+}
