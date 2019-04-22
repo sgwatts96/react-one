@@ -24,6 +24,7 @@ class IssueList extends Component {
     }));
   }
 
+
   render() {
     const { issues } = this.props
     const openIssuesCount = issues.filter(item => item.state === 'open').length;
@@ -32,7 +33,7 @@ class IssueList extends Component {
     let authorButton;
 
     if (this.state.isAuthorToggleOn) {
-      authorButton = <Author/>;
+      authorButton = <Author action={this.handleAuthorClick} />;
     } else {
       authorButton = null;
     }
@@ -54,7 +55,8 @@ class IssueList extends Component {
                 {closedIssuesCount} Closed 
               </div>
               <button onClick={this.handleAuthorClick}>
-                Author {authorButton}
+                  Author <div className="IssueList-tableHeaderButtonArrow" />
+                  {authorButton}
               </button>
 
 

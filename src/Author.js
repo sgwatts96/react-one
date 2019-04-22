@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import './Author.css'
+import PropTypes from 'prop-types';
 
 class Author extends Component {
+	static propTypes = {
+		onClick: PropTypes.func
+	}
+
 	constructor(props) {
 		super(props);
 	
-		this.setWrapperRef = this.setWrapperRef.bind(this);
 		this.handleClickOutside = this.handleClickOutside.bind(this);
+
+		this.ref = React.createRef();
 	}
 
 	componentDidMount() {
@@ -17,21 +23,20 @@ class Author extends Component {
 		document.removeEventListener('mousedown', this.handleClickOutside);
 	}
 
-	setWrapperRef(node) {
-		this.wrapperRef = node;
-	}
 
-	handleClickOutside(event) {
-		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-			alert('You clicked outside of me!');
-			this.props.handleAuthorClick();
+	handleClickOutside = (e) => {
+		const isOutside = !this.ref.current.contains(e.target)
 
+		if (isOutside){
+			// this.props.action();
 		}
 	}
   	render() {
 		return (
-		<div ref={this.setWrapperRef} className="Author-modal">
-			HI
+		<div ref={this.ref} className="Author-modal">
+			<div className="Author-item"><span>Filter by author</span></div>
+			<div ><input className="Author-search" placeholder="Filter Users"></input></div>
+			<div className="Author-item">results</div>
 		</div>
 		)
 	}

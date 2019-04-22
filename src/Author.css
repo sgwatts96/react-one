@@ -1,3 +1,25 @@
 .Author-modal{
-	position: fixed;
+	position: absolute;
+	left: 14rem;
+	border: 1px solid black;
+	width: 17rem;
+	height: 25rem;
+	background: white;
+}
+
+.Author-item{
+	display: block;
+	height: 1.5rem;
+	padding-top: .3rem;
+	text-align: left;
+	font-size: .8rem;
+}
+
+.Author-search{
+	height: 1.5rem;
+	width: 16rem;
+	border: .2rem solid rgb(119, 142, 243);
+	border-radius: .3rem;
+	margin-top: .1rem;
+	margin-bottom: .1rem;
 }

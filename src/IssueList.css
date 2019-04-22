@@ -62,3 +62,13 @@ button:active {
   font-weight: 700;
   border: none;
 }
+
+.IssueList-tableHeaderButtonArrow {
+  display:inline-block;
+  width: 0; 
+  height: 0; 
+  border-left: .3rem solid transparent;
+  border-right: .3rem solid transparent;
+  
+  border-top: .3rem solid #586069;
+}

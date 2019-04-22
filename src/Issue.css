@@ -9,6 +9,8 @@
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
     margin-right: 0;
+    z-index: -1;
+    position: relative;
 }
 
 .Issue-container a{
