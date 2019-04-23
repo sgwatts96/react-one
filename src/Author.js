@@ -12,9 +12,13 @@ class Author extends Component {
 	}
 
 	processData = (data) => {
-		return data.map(author => {
-			return 	<button className="Author-item" key={author.id} onClick={()=>this.handleClick(author.login)}><img className="Author-itemAvatar" src={author.avatar_url} alt=""/><span>{author.login}</span></button>
-		})
+		if(data){
+			return data.map(author => {
+				return 	<button className="Author-item" key={author.id} onClick={()=>this.handleClick(author.login)}><img className="Author-itemAvatar" src={author.avatar_url} alt=""/><span>{author.login}</span></button>
+			})
+		} else{
+			return null;
+		}
 	}
 
 	handleClick(value) {
