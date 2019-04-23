@@ -7,7 +7,7 @@ class Issue extends Component {
 
   getLabels = (lables) => {  
     return lables.map(label => {
-      return <div className="Issue-label" >
+      return <div className="Issue-label" key={label.id}>
           <div className="Issue-labelInner" style={{'backgroundColor': '#' + label.color}}>
             Type: {label.name}
           </div>

@@ -7,15 +7,51 @@ class IssueList extends Component {
 
   constructor(props){
     super(props);
-    this.state = {isAuthorToggleOn: false};
+    this.state = {isAuthorToggleOn: false,
+                  isLabelsToggleOn: false,
+                  isProjectsToggleOn: false,
+                  isMilestonesToggleOn: false,
+                  isAssigneeToggleOn: false,
+                  isSortToggleOn: false,
+                  openIssuesCount: 0,
+                  closedIssuesCount: 0,
+                  issues: this.props.issues,
+                };
+
+        
 
     this.handleAuthorClick = this.handleAuthorClick.bind(this);
+    this.handleLabelClick = this.handleLabelClick.bind(this);
+    this.handleProjectClick = this.handleProjectClick.bind(this);
+    this.handleMilestoneClick = this.handleMilestoneClick.bind(this);
+    this.handleAssigneeClick = this.handleAssigneeClick.bind(this);
+    this.handleSortClick = this.handleSortClick.bind(this);
+    this.processFilter = this.processFilter.bind(this);
+
+  }
+
+  componentDidMount() {
+      //this.setState({issues: this.props});
+
+      /*if(this.state.issues && this.state.issues.length > 0){
+        let {issuesToCount} = this.state.issues;
+        let open = issuesToCount.filter(item => item.state === 'open').length;
+        let closed = issuesToCount.filter(item => item.state === 'closed').length;
+      
+        this.setState({openIssuesCount: open,
+                        closedIssuesCount: closed});
+      }*/
   }
 
   createIssues = (issues) => {
-   return issues.map(issue => {
-      return <Issue key={issue.number} issue={issue} />
-    })
+    if(issues){
+      return issues.map(issue => {
+        return <Issue key={issue.number} issue={issue} />
+      })
+    } else{
+      return;
+    }
+
   }
 
   handleAuthorClick() {
