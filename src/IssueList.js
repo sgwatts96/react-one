@@ -105,9 +105,13 @@ class IssueList extends Component {
 
 
   render() {
-    const { issues } = this.props
-    const openIssuesCount = issues.filter(item => item.state === 'open').length;
-    const closedIssuesCount = issues.filter(item => item.state === 'closed').length;
+    //const { issues } = this.props
+    let myissues = this.state.issues;
+    console.log('steve issues are:' + myissues);
+    console.log('props'+ this.props);
+    console.log('state'+ this.state.issues);
+   // let openIssuesCount = issues.filter(item => item.state === 'open').length;
+    //let closedIssuesCount = issues.filter(item => item.state === 'closed').length;
 
     let authorButton;
     let labelsButton;
