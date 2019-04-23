@@ -23,17 +23,9 @@ class App extends Component {
             Learn React
           </a>
         </header>
-        <body>
-        <div className="container">
-          <Table characterData={characters} vic="aewsome" />
-        </div>
-        <div>
-          <IssueList issues={testData}/>
-        </div>
-        <div>
-
-        </div>
-        </body>
+          <div>
+            <IssueList issues={testData}/>
+          </div>
       </div>
     );
   }
