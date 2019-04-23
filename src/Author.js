@@ -1,38 +1,14 @@
 import React, { Component } from 'react';
 import './Author.css'
-import PropTypes from 'prop-types';
 
 class Author extends Component {
-	static propTypes = {
-		onClick: PropTypes.func
-	}
 
 	constructor(props) {
 		super(props);
 
-		this.handleClickOutside = this.handleClickOutside.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 
-		this.ref = React.createRef();
-
 		this.state = {resultValue: ''};
-
-	}
-
-	componentDidMount() {
-		document.addEventListener('mousedown', this.handleClickOutside);
-	}
-	
-	componentWillUnmount() {
-		document.removeEventListener('mousedown', this.handleClickOutside);
-	}
-
-
-	handleClickOutside = (e) => {
-		const isOutside = !this.ref.current.contains(e.target)
-		if (isOutside){
-			this.props.action();
-		}
 	}
 
 	processData = (data) => {
@@ -56,7 +32,7 @@ class Author extends Component {
 		let defaultOption = (this.props.defaultOption ? <div className="Author-item">{this.props.defaultOption}</div> : "");
 
 		return (
-		<div ref={this.ref} className="Author-modal">
+		<div className="Author-modal">
 			<div className="Author-item"><span>{this.props.title}</span></div>
 			{search}
 			{defaultOption}
