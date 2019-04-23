@@ -202,7 +202,9 @@ class IssueList extends Component {
           </thead>
           <tbody>
             <tr>
-            {this.createIssues(issues)}
+              <td>
+                {this.createIssues(myissues)}
+              </td>
             </tr>
           </tbody>
         </table>
