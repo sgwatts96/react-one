@@ -22,19 +22,6 @@ class IssueList extends Component {
     this.processFilter = this.processFilter.bind(this);
   }
 
-  componentDidMount() {
-      //this.setState({issues: this.props});
-
-      /*if(this.state.issues && this.state.issues.length > 0){
-        let {issuesToCount} = this.state.issues;
-        let open = issuesToCount.filter(item => item.state === 'open').length;
-        let closed = issuesToCount.filter(item => item.state === 'closed').length;
-      
-        this.setState({openIssuesCount: open,
-                        closedIssuesCount: closed});
-      }*/
-  }
-
   createIssues = (issues) => {
     if(issues){
       return issues.map(issue => {
@@ -52,13 +39,10 @@ class IssueList extends Component {
   }
 
   processFilter = (data) => {
-    console.log('process filter called: ' + JSON.stringify(data))
     if(data.type === 'Author'){
       let issues = this.state.issues
       let filteredIssues = issues.filter(item => item.user.login === data.criteria)
-      console.log(filteredIssues.length);
       this.setState({issues: filteredIssues});
-
     }
     return;
   }
@@ -74,15 +58,7 @@ class IssueList extends Component {
 
 
   render() {
-    //const { issues } = this.props
-    let myissues = this.state.issues;
-    console.log('steve issues are:' + myissues);
-    console.log('props'+ this.props);
-    console.log('state'+ this.state.issues);
-   // let openIssuesCount = issues.filter(item => item.state === 'open').length;
-    //let closedIssuesCount = issues.filter(item => item.state === 'closed').length;
-
-    let authorData = this.getAuthorData(myissues);
+    let authorData = this.getAuthorData(this.state.issues);
     let authorButton =  <Popover
                           isOpen={this.state.isAuthorToggleOn}
                           onClickOutside={() => this.setState({ isAuthorToggleOn: false })}
@@ -152,11 +128,11 @@ class IssueList extends Component {
                 <div className="IssueList-tableHeader">
                 <div className="IssueList-tableHeaderItem">
                   <svg viewBox="0 0 14 16" version="1.1" width="14" height="16"><path d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg>
-                  {this.state.openIssuesCount} Open
+                    {this.state.issues.filter(item => item.state === 'open').length} Open
                 </div>
                 <div className="IssueList-tableHeaderItem">
                   <svg viewBox="0 0 12 16" version="1.1" width="12" height="16" ><path d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
-                  {this.state.closedIssuesCount} Closed 
+                    {this.state.issues.filter(item => item.state === 'closed').length} Closed 
                 </div>
                 {authorButton}
                 {labelsButton}
@@ -171,7 +147,7 @@ class IssueList extends Component {
           <tbody>
             <tr>
               <td>
-                {this.createIssues(myissues)}
+                {this.createIssues(this.state.issues)}
               </td>
             </tr>
           </tbody>
