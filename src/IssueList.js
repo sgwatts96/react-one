@@ -91,6 +91,17 @@ class IssueList extends Component {
     })
   }
 
+  processFilter = (data) => {
+    console.log('process filter called: ' + JSON.stringify(data))
+    if(data.type === 'Author'){
+      let issues = this.state.issues
+      let filteredIssues = issues.filter(item => item.user.login === data.criteria)
+      console.log(filteredIssues.length);
+      this.setState({issues: filteredIssues});
+
+    }
+    return;
+  }
 
 
   render() {
