@@ -9,8 +9,9 @@ class Author extends Component {
 
 	constructor(props) {
 		super(props);
-	
+
 		this.handleClickOutside = this.handleClickOutside.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 
 		this.ref = React.createRef();
 	}
@@ -26,9 +27,8 @@ class Author extends Component {
 
 	handleClickOutside = (e) => {
 		const isOutside = !this.ref.current.contains(e.target)
-
 		if (isOutside){
-			// this.props.action();
+			this.props.action();
 		}
 	}
   	render() {
