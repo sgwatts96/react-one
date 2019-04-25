@@ -1,41 +1,41 @@
-.container1 {
-  margin-top: 50px;
-  justify-content: center;
+/*=========Main container=========*/
+
+.IssueList-mainContainer {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 14.5rem 3em 14.5rem;
+  padding: 0;
+  margin-top: 50px;
   flex: auto;
+  flex-direction: column;
 }
 
-.container1 table th{
-  display: table-header-group;
+/*=========Container Header=========*/
+
+.IssueList-header {
+  display: flex;
+  box-sizing: border-box;
+  flex-basis: 100%;
+  width: 100%;
   border: 1px solid lightgray;
   background-color: #f6f8fa;
-  text-align: left;
-  padding-left: 1.25rem;
-}
-
-.container1 table td{
-  border: 1px solid lightgray;
-}
-
-.IssueList-tableHeader{
   height: 3rem;
-  display: table-cell;
-  width: 60rem;
-  vertical-align: middle;
-  padding-left: 1.25rem;
-  font-weight: normal;
-  color: #586069;
+  justify-content: center;
 }
 
-.IssueList-tableHeader svg{
-  transform: translateY(.15rem);
-  padding-right: .5rem;
+.IssueList-headerItemSpacer{
+  width: 16rem;
 }
 
-.IssueList-tableHeaderItem {
-  display: inline-block;
-  padding-right: 1rem;
+/*=========Buttons=========*/
+
+.IssueList-headerItemArrow {
+  display:inline-block;
+  width: 0; 
+  height: 0; 
+  border-left: .3rem solid transparent;
+  border-right: .3rem solid transparent;
+  border-top: .3rem solid #586069;
 }
 
 button {
@@ -54,24 +54,15 @@ button {
 
 button:hover,
 button:focus {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 button:active {
-  font-weight: 700;
+  font-weight: bold;
   border: none;
 }
 
-.IssueList-tableHeaderButtonArrow {
-  display:inline-block;
-  width: 0; 
-  height: 0; 
-  border-left: .3rem solid transparent;
-  border-right: .3rem solid transparent;
-  
-  border-top: .3rem solid #586069;
-}
-
-.IssueList-tableHeaderButtonArrowStart {
-  padding-left: 15rem;
+.IssueList-headerItem svg{
+  transform: translateY(.15rem);
+  padding-right: .5rem;
 }
