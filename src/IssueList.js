@@ -61,7 +61,7 @@ class IssueList extends Component {
                           onClickOutside={() => this.setState({ isAuthorToggleOn: false })}
                           position={'bottom'}
                           content={(
-                            <Author title="Filter by author" placeholderText="Filter users" isSearchable="true" data={authorData} filter={this.processFilter}/>
+                            <Author type="author" title="Filter by author" placeholderText="Filter users" isSearchable="true" data={authorData} filter={this.processFilter} searchLabel="author"/>
                           )}>
                           {this.getHeaderButton("Author", "isAuthorToggleOn", true)}
                         </Popover>
@@ -71,7 +71,7 @@ class IssueList extends Component {
                           onClickOutside={() => this.setState({ isLabelsToggleOn: false })}
                           position={'bottom'}
                           content={(
-                            <Author title="Filter by label" placeholderText="Filter labels" helpText="hi" isSearchable={true} defaultOption="Unlabeled" />
+                            <Author type="label" title="Filter by label" placeholderText="Filter labels" helpText="hi" isSearchable={true} defaultOption="Unlabeled" />
                           )}>
                           {this.getHeaderButton("Labels", "isLabelsToggleOn", false)}
                         </Popover>
@@ -81,7 +81,7 @@ class IssueList extends Component {
                             onClickOutside={() => this.setState({ isProjectsToggleOn: false })}
                             position={'bottom'}
                             content={(
-                              <Author title="Filter by project" placeholderText="Filter projects" isSearchable={true}/>
+                              <Author type="project" title="Filter by project" placeholderText="Filter projects" isSearchable={true}/>
                             )}>
                             {this.getHeaderButton("Projects", "isProjectsToggleOn", false)}
                           </Popover>
@@ -91,7 +91,7 @@ class IssueList extends Component {
                               onClickOutside={() => this.setState({ isMilestonesToggleOn: false })}
                               position={'bottom'}
                               content={(
-                                <Author title="Filter by milestone" placeholderText="Filter milestones" isSearchable={true} defaultOption="Issues with no milestone" />
+                                <Author type="milestone" title="Filter by milestone" placeholderText="Filter milestones" isSearchable={true} defaultOption="Issues with no milestone" />
                               )}>
                               {this.getHeaderButton("Milestones", "isMilestonesToggleOn", false)}
                             </Popover>
