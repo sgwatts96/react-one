@@ -1,8 +1,9 @@
 .Author-modal{
 	left: 14rem;
-	border: 1px solid black;
+	border: 1px solid lightgray;
 	width: 17rem;
-	height: 25rem;
+	overflow-y: auto;
+    max-height: 20rem;
 	background: white;
 }
 
