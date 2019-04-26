@@ -101,7 +101,7 @@ class IssueList extends Component {
                             onClickOutside={() => this.setState({ isAssigneeToggleOn: false })}
                             position={'bottom'}
                             content={(
-                              <Author title="Filter by who's assigned" placeholderText="Filter users" isSearchable={true} defaultOption="Assigned to nobody" />
+                              <Author type="assignee" title="Filter by who's assigned" placeholderText="Filter users" isSearchable={true} defaultOption="Assigned to nobody" />
                             )}>
                             {this.getHeaderButton("Assignees", "isAssigneeToggleOn", false)}
                           </Popover>
@@ -111,7 +111,7 @@ class IssueList extends Component {
                         onClickOutside={() => this.setState({ isSortToggleOn: false })}
                         position={'bottom'}
                         content={(
-                          <Author title="Sort by" isSearchable={false} />
+                          <Author type="sort" title="Sort by" isSearchable={false} />
                         )}>
                         {this.getHeaderButton("Sort", "isSortToggleOn", false)}
                       </Popover>
