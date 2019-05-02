@@ -50,9 +50,12 @@ class IssueList extends Component {
           return null;
         }
       })
+    } else if(dataType === 'Milestone'){
+      defaultData = this.state.issues.map(issue => {
+        return issue.milestone
+      })
     }
-    let dedu = this.dedupeArray(defaultData);
-    return dedu;
+    return this.dedupeArray(defaultData);
   }
 
   dedupeArray = (data) => {
@@ -97,7 +100,11 @@ class IssueList extends Component {
 
       })
       this.setState({issues: filteredIssues});
-    }
+    } else if(data.type === 'milestone'){
+      let issues = this.state.originalIssues
+      let filteredIssues = issues.filter(item => item.milestone.id === data.criteria)
+      this.setState({issues: filteredIssues});
+    } 
     return;
   }
 
@@ -144,7 +151,7 @@ class IssueList extends Component {
                               onClickOutside={() => this.setState({ isMilestonesToggleOn: false })}
                               position={'bottom'}
                               content={(
-                                <Author type="milestone" title="Filter by milestone" placeholderText="Filter milestones" isSearchable={true} defaultOption="Issues with no milestone" />
+                                <Author type="milestone" title="Filter by milestone" placeholderText="Filter milestones" isSearchable={true} data={this.getDefaultButtonData('Milestone')} filter={this.processFilter} defaultOption="Issues with no milestone" />
                               )}>
                               {this.getHeaderButton("Milestones", "isMilestonesToggleOn", false)}
                             </Popover>

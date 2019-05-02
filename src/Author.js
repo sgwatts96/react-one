@@ -12,6 +12,7 @@ class Author extends Component {
 		let filterCriteriaMap = new Map()
 		filterCriteriaMap.set('author', 'login');
 		filterCriteriaMap.set('label', 'name');
+		filterCriteriaMap.set('milestone', 'name');
 
 		this.state = {	resultValue: '',
 						searchText: '',
@@ -38,6 +39,10 @@ class Author extends Component {
 			} else if(this.state.type === 'label'){
 				return issues.map(label => {
 					return 	<button className="Author-item" key={label.id} onClick={()=>this.handleClick(label.id)}><span className="Author-itemLabel" style={{'backgroundColor': '#' + label.color}}/><span>{label.name}</span></button>
+				})
+			} else if(this.state.type === 'milestone'){
+				return issues.map(milestone => {
+					return 	<button className="Author-item" key={milestone.id} onClick={()=>this.handleClick(milestone.id)}><span className="Author-itemLabel" /><span>{milestone.title}</span></button>
 				})
 			}
 		} else {
