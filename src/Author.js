@@ -86,7 +86,7 @@ class Author extends Component {
 
   	render() {
 		let search = (this.props.isSearchable ? <div className="Author-search"><input id="searchBox" className="Author-searchInput" placeholder={this.props.placeholderText} type="text" autoFocus={true} onChange={this.handleKeyUp}></input></div> : "");
-		let defaultOption = (this.props.defaultOption && this.state.searchText.length < 2? <div className="Author-item">{this.props.defaultOption}</div> : "");
+		let defaultOption = (this.props.defaultOption && this.state.searchText.length < 2? <button className="Author-item Author-default">{this.props.defaultOption}</button> : "");
 		let searchOption = (this.state.searchText.length > 1 && this.props.searchLabel ? <button className="Author-searchButton" key="SearchOption" onClick={()=>this.handleClick(this.state.searchText)}><span>{this.props.searchLabel + ':' + this.state.searchText} <br/> Filter by this user</span></button>: "");
 		let noResults = (!this.props.searchLabel && this.state.filteredOptions.length < 1 && this.state.searchText.length > 1 ? <div className="Author-item"><span>No {this.state.type} found. Sorry about that.</span></div>: "");
 
