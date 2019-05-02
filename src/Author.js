@@ -22,28 +22,25 @@ class Author extends Component {
 	}
 
 	processData() {
+		let issues;
+
 		if(this.state.filteredOptions){
+			issues = this.state.filteredOptions
+		} else if(this.state.originalOptions){
+			issues = this.state.originalOptions
+		}
+
+		if(issues){
 			if(this.state.type === 'author') {
-				return this.state.filteredOptions.map(author => {
+				return issues.map(author => {
 					return 	<button className="Author-item" key={author.id} onClick={()=>this.handleClick(author.id)}><img className="Author-itemAvatar" src={author.avatar_url} alt=""/><span>{author.login}</span></button>
 				})
 			} else if(this.state.type === 'label'){
-				return this.state.filteredOptions.map(label => {
+				return issues.map(label => {
 					return 	<button className="Author-item" key={label.id} onClick={()=>this.handleClick(label.id)}><span className="Author-itemLabel" style={{'backgroundColor': '#' + label.color}}/><span>{label.name}</span></button>
 				})
 			}
-		} else if(this.state.originalOptions){
-			if(this.state.type === 'author'){
-				return this.state.originalOptions.map(author => {
-					return 	<button className="Author-button" key={author.id} onClick={()=>this.handleClick(author.id)}><img className="Author-itemAvatar" src={author.avatar_url} alt=""/><span>{author.login}</span></button>
-				})
-			} else if(this.state.type === 'label'){
-				return this.state.originalOptions.map(label => {
-					return 	<button className="Author-item" key={label.id} onClick={()=>this.handleClick(label.id)}><span className="Author-itemLabel" style={{'backgroundColor': '#' + label.color}}/><span>{label.name}</span></button>
-				})
-			}
-			
-		}else {
+		} else {
 			return null;
 		}
 	}
