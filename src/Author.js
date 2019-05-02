@@ -48,7 +48,7 @@ class Author extends Component {
 				})
 			} else if(this.state.type === 'assignee'){
 				return issues.map(assignee => {
-					return 	<button className="Author-item" key={assignee.id} onClick={()=>this.handleClick(assignee.id)}><span className="Author-itemLabel" /><span>{assignee.login}</span></button>
+					return 	<button className="Author-item" key={assignee.id} onClick={()=>this.handleClick(assignee.id)}><img className="Author-itemAvatar" src={assignee.avatar_url} alt=""/><span>{assignee.login}</span></button>
 				})
 			}
 		} else {
