@@ -9,10 +9,16 @@ class Author extends Component {
 		this.handleClick = this.handleClick.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
 
+		let filterCriteriaMap = new Map()
+		filterCriteriaMap.set('author', 'login');
+		filterCriteriaMap.set('label', 'name');
+
 		this.state = {	resultValue: '',
 						searchText: '',
 						originalOptions: this.props.data,
-						filteredOptions: ''};
+						filteredOptions: '',
+						type: this.props.type,
+						filterMap: filterCriteriaMap};
 	}
 
 	processData() {
