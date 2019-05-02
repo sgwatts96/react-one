@@ -66,6 +66,8 @@ class IssueList extends Component {
         arrayToReturn.push(item);
       }
     })
+
+    return arrayToReturn;
   }
 
   processFilter = (data) => {
