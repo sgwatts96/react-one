@@ -69,15 +69,37 @@ class IssueList extends Component {
   }
 
   processFilter = (data) => {
-    if(data.type === 'Author'){
-      let issues = this.state.issues
-      let filteredIssues = issues.filter(item => item.user.login === data.criteria)
+    if(data.type === 'author'){
+      let issues = this.state.originalIssues
+      let filteredIssues = issues.filter(item => item.user.id === data.criteria)
+      this.setState({issues: filteredIssues});
+    } else if(data.type === 'Open/Closed'){
+      let issues = this.state.originalIssues
+      let filteredIssues = issues.filter(item => item.state === data.criteria)
+      this.setState({issues: filteredIssues});
+    } else if(data.type === 'label'){
+      let issues = this.state.originalIssues
+      let filteredIssues = [];
+      issues.map(item => {
+        let containsLabel = false;
+        if(item.labels){
+          item.labels.map(label =>{
+            if(label.id === data.criteria){
+              containsLabel = true;
+            }
+          })
+          if(containsLabel){
+            filteredIssues.push(item);
+          }
+        }
+
+      })
       this.setState({issues: filteredIssues});
     }
     return;
   }
 
-  getHeaderButton = (buttonLabel, toggleVariable) => {    
+  getHeaderButton = (buttonLabel, toggleVariable) => {
     let button =  <button onClick={() => this.setState({ [toggleVariable]: !this.state[toggleVariable] })}>
                     {buttonLabel} <div className="IssueList-headerItemArrow" />
                   </button>
