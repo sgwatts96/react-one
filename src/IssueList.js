@@ -54,6 +54,17 @@ class IssueList extends Component {
       defaultData = this.state.issues.map(issue => {
         return issue.milestone
       })
+    } else if(dataType === 'Assignee'){
+      this.state.issues.map(issue => {
+        if(issue.assignees){
+          return issue.assignees.map(assignee => {
+            defaultData.push(assignee);
+            return null;
+          })
+        } else{
+          return null;
+        }
+      })
     }
     return this.dedupeArray(defaultData);
   }
@@ -104,7 +115,25 @@ class IssueList extends Component {
       let issues = this.state.originalIssues
       let filteredIssues = issues.filter(item => item.milestone.id === data.criteria)
       this.setState({issues: filteredIssues});
-    } 
+    } else if(data.type === 'assignee'){
+      let issues = this.state.originalIssues
+      let filteredIssues = [];
+      issues.map(item => {
+        let containsAssignee = false;
+        if(item.assignees){
+          item.assignees.map(assignee =>{
+            if(assignee.id === data.criteria){
+              containsAssignee = true;
+            }
+          })
+          if(containsAssignee){
+            filteredIssues.push(item);
+          }
+        }
+
+      })
+      this.setState({issues: filteredIssues});
+    }
     return;
   }
 
@@ -161,7 +190,7 @@ class IssueList extends Component {
                             onClickOutside={() => this.setState({ isAssigneeToggleOn: false })}
                             position={'bottom'}
                             content={(
-                              <Author type="assignee" title="Filter by who's assigned" placeholderText="Filter users" isSearchable={true} defaultOption="Assigned to nobody" />
+                              <Author type="assignee" title="Filter by who's assigned" placeholderText="Filter users" isSearchable={true} data={this.getDefaultButtonData('Assignee')} filter={this.processFilter} defaultOption="Assigned to nobody" />
                             )}>
                             {this.getHeaderButton("Assignees", "isAssigneeToggleOn", false)}
                           </Popover>

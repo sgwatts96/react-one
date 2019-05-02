@@ -13,6 +13,8 @@ class Author extends Component {
 		filterCriteriaMap.set('author', 'login');
 		filterCriteriaMap.set('label', 'name');
 		filterCriteriaMap.set('milestone', 'name');
+		filterCriteriaMap.set('assignee', 'login');
+
 
 		this.state = {	resultValue: '',
 						searchText: '',
@@ -43,6 +45,10 @@ class Author extends Component {
 			} else if(this.state.type === 'milestone'){
 				return issues.map(milestone => {
 					return 	<button className="Author-item" key={milestone.id} onClick={()=>this.handleClick(milestone.id)}><span className="Author-itemLabel" /><span>{milestone.title}</span></button>
+				})
+			} else if(this.state.type === 'assignee'){
+				return issues.map(assignee => {
+					return 	<button className="Author-item" key={assignee.id} onClick={()=>this.handleClick(assignee.id)}><span className="Author-itemLabel" /><span>{assignee.login}</span></button>
 				})
 			}
 		} else {
