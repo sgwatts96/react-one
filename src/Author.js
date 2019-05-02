@@ -79,7 +79,7 @@ class Author extends Component {
   	render() {
 		let search = (this.props.isSearchable ? <div className="Author-search"><input id="searchBox" className="Author-searchInput" placeholder={this.props.placeholderText} type="text" autoFocus={true} onChange={this.handleKeyUp}></input></div> : "");
 		let defaultOption = (this.props.defaultOption ? <div className="Author-item">{this.props.defaultOption}</div> : "");
-		let searchOption = (this.state.searchText.length > 1 ? <button className="Author-searchButton" key="SearchOption" onClick={()=>this.handleClick(this.state.searchText)}><span>{this.props.searchLabel + ':' + this.state.searchText} <br/> Filter by this user</span></button>: "");
+		let searchOption = (this.state.searchText.length > 1 && this.props.searchLabel ? <button className="Author-searchButton" key="SearchOption" onClick={()=>this.handleClick(this.state.searchText)}><span>{this.props.searchLabel + ':' + this.state.searchText} <br/> Filter by this user</span></button>: "");
 
 		return (
 		<div className="Author-modal">
