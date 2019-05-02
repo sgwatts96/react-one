@@ -16,9 +16,9 @@ class IssueList extends Component {
                   isSortToggleOn: false,
                   openIssuesCount: 0,
                   closedIssuesCount: 0,
+                  originalIssues: this.props.issues,
                   issues: this.props.issues,
                 };
-
     this.processFilter = this.processFilter.bind(this);
   }
 
@@ -32,9 +32,39 @@ class IssueList extends Component {
     }
   }
 
-  getAuthorData = (issues) => {
-    return issues.map(issue => {
-      return issue.user
+  getDefaultButtonData = (dataType) => {
+    let defaultData = [];
+
+    if(dataType === 'Author') {
+      defaultData = this.state.issues.map(issue => {
+        return issue.user
+      })
+    } else if(dataType === 'Label'){
+      this.state.issues.map(issue => {
+        if(issue.labels){
+          return issue.labels.map(label => {
+            defaultData.push(label);
+            return null;
+          })
+        } else{
+          return null;
+        }
+      })
+    }
+    let dedu = this.dedupeArray(defaultData);
+    return dedu;
+  }
+
+  dedupeArray = (data) => {
+    let ids = new Set();
+
+    let arrayToReturn = [];
+    
+    data.map(item => {
+      if(!ids.has(item.id)){
+        ids.add(item.id);
+        arrayToReturn.push(item);
+      }
     })
   }
 
