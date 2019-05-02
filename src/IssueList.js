@@ -109,13 +109,12 @@ class IssueList extends Component {
   }
 
   render() {
-    let authorData = this.getAuthorData(this.state.issues);
     let authorButton =  <Popover
                           isOpen={this.state.isAuthorToggleOn}
                           onClickOutside={() => this.setState({ isAuthorToggleOn: false })}
                           position={'bottom'}
                           content={(
-                            <Author type="author" title="Filter by author" placeholderText="Filter users" isSearchable="true" data={authorData} filter={this.processFilter} searchLabel="author"/>
+                              <Author type="author" title="Filter by author" placeholderText="Filter users" isSearchable="true" data={this.getDefaultButtonData('Author')} filter={this.processFilter} searchLabel="author"/>
                           )}>
                           {this.getHeaderButton("Author", "isAuthorToggleOn", true)}
                         </Popover>
@@ -125,7 +124,7 @@ class IssueList extends Component {
                           onClickOutside={() => this.setState({ isLabelsToggleOn: false })}
                           position={'bottom'}
                           content={(
-                            <Author type="label" title="Filter by label" placeholderText="Filter labels" helpText="hi" isSearchable={true} defaultOption="Unlabeled" />
+                            <Author type="label" title="Filter by label" placeholderText="Filter labels" isSearchable={true} data={this.getDefaultButtonData('Label')} filter={this.processFilter} defaultOption="Unlabeled" />
                           )}>
                           {this.getHeaderButton("Labels", "isLabelsToggleOn", false)}
                         </Popover>
