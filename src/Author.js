@@ -23,13 +23,26 @@ class Author extends Component {
 
 	processData() {
 		if(this.state.filteredOptions){
-			return this.state.filteredOptions.map(author => {
-				return 	<button className="Author-item" key={author.id} onClick={()=>this.handleClick(author.login)}><img className="Author-itemAvatar" src={author.avatar_url} alt=""/><span>{author.login}</span></button>
-			})
+			if(this.state.type === 'author') {
+				return this.state.filteredOptions.map(author => {
+					return 	<button className="Author-item" key={author.id} onClick={()=>this.handleClick(author.id)}><img className="Author-itemAvatar" src={author.avatar_url} alt=""/><span>{author.login}</span></button>
+				})
+			} else if(this.state.type === 'label'){
+				return this.state.filteredOptions.map(label => {
+					return 	<button className="Author-item" key={label.id} onClick={()=>this.handleClick(label.id)}><span className="Author-itemLabel" style={{'backgroundColor': '#' + label.color}}/><span>{label.name}</span></button>
+				})
+			}
 		} else if(this.state.originalOptions){
-			return this.state.originalOptions.map(author => {
-				return 	<button className="Author-button" key={author.id} onClick={()=>this.handleClick(author.login)}><img className="Author-itemAvatar" src={author.avatar_url} alt=""/><span>{author.login}</span></button>
-			})
+			if(this.state.type === 'author'){
+				return this.state.originalOptions.map(author => {
+					return 	<button className="Author-button" key={author.id} onClick={()=>this.handleClick(author.id)}><img className="Author-itemAvatar" src={author.avatar_url} alt=""/><span>{author.login}</span></button>
+				})
+			} else if(this.state.type === 'label'){
+				return this.state.originalOptions.map(label => {
+					return 	<button className="Author-item" key={label.id} onClick={()=>this.handleClick(label.id)}><span className="Author-itemLabel" style={{'backgroundColor': '#' + label.color}}/><span>{label.name}</span></button>
+				})
+			}
+			
 		}else {
 			return null;
 		}
@@ -38,7 +51,7 @@ class Author extends Component {
 	handleClick(value) {
 		this.setState({resultValue: value});
 		let data = {
-			'type':'Author',
+			'type': this.state.type,
 			'criteria':value
 		};
 
@@ -46,9 +59,10 @@ class Author extends Component {
 	}
 
 	handleKeyUp(event) {
+		let mapping = this.state.filterMap.get(this.state.type);
 		if(event.target.value){
 			let filteredOpt = this.state.originalOptions.filter(opt =>{
-				if(opt.login.includes(event.target.value) > 0) {
+				if(opt[mapping].includes(event.target.value) > 0) {
 					return opt;
 				} else{
 					return null;
