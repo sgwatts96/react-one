@@ -21,7 +21,8 @@ class Author extends Component {
 						originalOptions: this.props.data,
 						filteredOptions: '',
 						type: this.props.type,
-						filterMap: filterCriteriaMap};
+						filterMap: filterCriteriaMap,
+						currentSort: 'oldest'};
 	}
 
 	processData() {
@@ -84,12 +85,34 @@ class Author extends Component {
 		}
 	}
 
+	prepareSort() {
+		let sortOptions = [];
+		let check = <svg viewBox="0 0 12 16" version="1.1" width="12" height="16" ><path d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
+		
+		sortOptions.push(<button className="Author-item" key="newest" onClick={()=>this.handleSort('newest')}><span className="Author-default" /><span>{this.state.currentSort === 'newest' ? check : ''}Newest</span></button>)
+		sortOptions.push(<button className="Author-item" key="oldest" onClick={()=>this.handleSort('oldest')}><span className="Author-default" /><span>{this.state.currentSort === 'oldest' ? check : ''}Oldest</span></button>)
+		sortOptions.push(<button className="Author-item" key="mostCommented" onClick={()=>this.handleSort('mostCommented')}><span className="Author-default" /><span>{this.state.currentSort === 'mostCommented' ? check : ''}Most Commented</span></button>)
+		sortOptions.push(<button className="Author-item" key="leastCommented" onClick={()=>this.handleSort('leastCommented')}><span className="Author-default" /><span>{this.state.currentSort === 'leastCommented' ? check : ''}Least Commented</span></button>)
+		sortOptions.push(<button className="Author-item" key="recentlyUpdated" onClick={()=>this.handleSort('recentlyUpdated')}><span className="Author-default" /><span>{this.state.currentSort === 'recentlyUpdated' ? check : ''}Recently Updated</span></button>)
+		sortOptions.push(<button className="Author-item" key="leastRecentlyUpdated" onClick={()=>this.handleSort('leastRecentlyUpdated')}><span className="Author-default" /><span>{this.state.currentSort === 'leastRecentlyUpdated' ? check : ''}Least Recently Updated</span></button>)
+
+		return sortOptions;
+	}
+
+	handleSort(sortOption) {
+		if(sortOption){
+			this.setState({currentSort: sortOption});
+	
+			this.props.sort(sortOption);
+		}
+	}
+
   	render() {
 		let search = (this.props.isSearchable ? <div className="Author-search"><input id="searchBox" className="Author-searchInput" placeholder={this.props.placeholderText} type="text" autoFocus={true} onChange={this.handleKeyUp}></input></div> : "");
 		let defaultOption = (this.props.defaultOption && this.state.searchText.length < 2? <button className="Author-item Author-default">{this.props.defaultOption}</button> : "");
 		let searchOption = (this.state.searchText.length > 1 && this.props.searchLabel ? <button className="Author-searchButton" key="SearchOption" onClick={()=>this.handleClick(this.state.searchText)}><span>{this.props.searchLabel + ':' + this.state.searchText} <br/> Filter by this user</span></button>: "");
 		let noResults = (!this.props.searchLabel && this.state.filteredOptions.length < 1 && this.state.searchText.length > 1 ? <div className="Author-item"><span>No {this.state.type} found. Sorry about that.</span></div>: "");
-
+		let sort = (this.props.isSort ? this.prepareSort() : '');
 
 		return (
 		<div className="Author-modal">
@@ -99,6 +122,7 @@ class Author extends Component {
 			{searchOption}
 			{this.processData()}
 			{noResults}
+			{sort}
 		</div>
 		)
 	}

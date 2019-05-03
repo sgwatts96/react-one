@@ -20,6 +20,7 @@ class IssueList extends Component {
                   issues: this.props.issues,
                 };
     this.processFilter = this.processFilter.bind(this);
+    this.processSort = this.processSort.bind(this);
   }
 
   createIssues = (issues) => {
@@ -137,6 +138,45 @@ class IssueList extends Component {
     return;
   }
 
+  processSort = (sortBy) => {
+    let sortMap = new Map()
+    sortMap.set('newest', '{"field":"created_at","direction":"ab","isDate":"true"}');
+    sortMap.set('oldest', '{"field":"created_at","direction":"ba","isDate":"true"}');
+    sortMap.set('mostCommented', '{"field":"comments","direction":"ab"}');
+    sortMap.set('leastCommented', '{"field":"comments","direction":"ba"}');
+    sortMap.set('recentlyUpdated', '{"field":"updated_at","direction":"ab","isDate":"true"}');
+    sortMap.set('leastRecentlyUpdated', '{"field":"updated_at","direction":"ba","isDate":"true"}');
+
+    let issues;
+
+    if(this.state.filteredIssues){
+      issues = this.state.filteredIssues;
+    } else if(this.state.originalIssues){
+      issues = this.state.originalIssues;
+    }
+
+    if(issues){
+      let sortDetails = JSON.parse(sortMap.get(sortBy));
+
+      issues.sort(function(a,b) {
+          if(sortDetails.direction === 'ab'){
+            if(sortDetails.isDate){
+              return new Date(a[sortDetails.field]) - new Date(b[sortDetails.field]);
+            } else{
+              return a[sortDetails.field] - b[sortDetails.field];
+            }
+          }else{
+            if(sortDetails.isDate){
+              return new Date(b[sortDetails.field]) - new Date(a[sortDetails.field]);
+            } else {
+              return b[sortDetails.field] - a[sortDetails.field];
+            }
+          }
+      })
+      this.setState({filteredIssues: issues});
+    }
+  }
+
   getHeaderButton = (buttonLabel, toggleVariable) => {
     let button =  <button onClick={() => this.setState({ [toggleVariable]: !this.state[toggleVariable] })}>
                     {buttonLabel} <div className="IssueList-headerItemArrow" />
@@ -200,7 +240,7 @@ class IssueList extends Component {
                         onClickOutside={() => this.setState({ isSortToggleOn: false })}
                         position={'bottom'}
                         content={(
-                          <Author type="sort" title="Sort by" isSearchable={false} />
+                          <Author type="sort" title="Sort by" isSearchable={false} isSort={true} sort={this.processSort}/>
                         )}>
                         {this.getHeaderButton("Sort", "isSortToggleOn", false)}
                       </Popover>
