@@ -18,15 +18,27 @@ class IssueList extends Component {
                   closedIssuesCount: 0,
                   originalIssues: this.props.issues,
                   issues: this.props.issues,
+                  openClosedIssues: this.props.issues,
+                  currentFilter: '',
+                  showingOpenClosed: 'open'
                 };
     this.processFilter = this.processFilter.bind(this);
     this.processSort = this.processSort.bind(this);
+    this.countOpenClosed = this.countOpenClosed.bind(this);
+  }
+
+  componentDidMount() {
+    this.countOpenClosed();
   }
 
   createIssues = (issues) => {
     if(issues){
       return issues.map(issue => {
-        return <Issue key={issue.number} issue={issue} />
+        if(issue.state === this.state.showingOpenClosed){
+          return <Issue key={issue.number} issue={issue} />
+        } else{
+          return null
+        }
       })
     } else{
       return;
@@ -35,13 +47,20 @@ class IssueList extends Component {
 
   getDefaultButtonData = (dataType) => {
     let defaultData = [];
+    let issues;
+
+    if(this.state.currentFilter){
+      issues = this.state.issues
+    } else{
+      issues = this.state.originalIssues;
+    }
 
     if(dataType === 'Author') {
-      defaultData = this.state.issues.map(issue => {
+      defaultData = issues.map(issue => {
         return issue.user
       })
     } else if(dataType === 'Label'){
-      this.state.issues.map(issue => {
+      issues.map(issue => {
         if(issue.labels){
           return issue.labels.map(label => {
             defaultData.push(label);
@@ -52,11 +71,11 @@ class IssueList extends Component {
         }
       })
     } else if(dataType === 'Milestone'){
-      defaultData = this.state.issues.map(issue => {
+      defaultData = issues.map(issue => {
         return issue.milestone
       })
     } else if(dataType === 'Assignee'){
-      this.state.issues.map(issue => {
+      issues.map(issue => {
         if(issue.assignees){
           return issue.assignees.map(assignee => {
             defaultData.push(assignee);
@@ -86,17 +105,26 @@ class IssueList extends Component {
   }
 
   processFilter = (data) => {
+    if(data){
+      this.setState({currentFilter: data});
+    } else{
+      data = this.state.currentFilter;
+    }
+
+    let filteredIssues;
+    let ocIssues;
+
     if(data.type === 'author'){
       let issues = this.state.originalIssues
-      let filteredIssues = issues.filter(item => item.user.id === data.criteria)
-      this.setState({issues: filteredIssues});
+      filteredIssues = issues.filter(item => item.user.id === data.criteria)
+      ocIssues = filteredIssues.filter( item => item.state === this.state.showingOpenClosed);
     } else if(data.type === 'Open/Closed'){
       let issues = this.state.originalIssues
-      let filteredIssues = issues.filter(item => item.state === data.criteria)
+      filteredIssues = issues.filter(item => item.state === data.criteria && item.state === this.state.showingOpenClosed)
       this.setState({issues: filteredIssues});
     } else if(data.type === 'label'){
-      let issues = this.state.originalIssues
-      let filteredIssues = [];
+      let issues = this.state.originalIssues.filter(item => item.state === this.state.showingOpenClosed);
+      filteredIssues = [];
       issues.map(item => {
         let containsLabel = false;
         if(item.labels){
@@ -111,14 +139,12 @@ class IssueList extends Component {
         }
 
       })
-      this.setState({issues: filteredIssues});
     } else if(data.type === 'milestone'){
       let issues = this.state.originalIssues
-      let filteredIssues = issues.filter(item => item.milestone.id === data.criteria)
-      this.setState({issues: filteredIssues});
+      filteredIssues = issues.filter(item => item.milestone.id === data.criteria && item.state === this.state.showingOpenClosed);
     } else if(data.type === 'assignee'){
-      let issues = this.state.originalIssues
-      let filteredIssues = [];
+      let issues = this.state.originalIssues.filter(item => item.state === this.state.showingOpenClosed);
+      filteredIssues = [];
       issues.map(item => {
         let containsAssignee = false;
         if(item.assignees){
@@ -133,9 +159,14 @@ class IssueList extends Component {
         }
 
       })
-      this.setState({issues: filteredIssues});
+    } else{
+      filteredIssues = this.state.originalIssues;
     }
-    return;
+console.log('in process filter: ' + filteredIssues.length)
+    this.setState({issues: filteredIssues, openClosedIssues: ocIssues});
+    this.countOpenClosed(filteredIssues);
+
+    return filteredIssues;
   }
 
   processSort = (sortBy) => {
@@ -147,18 +178,18 @@ class IssueList extends Component {
     sortMap.set('recentlyUpdated', '{"field":"updated_at","direction":"ab","isDate":"true"}');
     sortMap.set('leastRecentlyUpdated', '{"field":"updated_at","direction":"ba","isDate":"true"}');
 
-    let issues;
+    let filteredIssues;
 
-    if(this.state.filteredIssues){
-      issues = this.state.filteredIssues;
+    if(this.state.issues){
+      filteredIssues = this.state.issues;
     } else if(this.state.originalIssues){
-      issues = this.state.originalIssues;
+      filteredIssues = this.state.originalIssues;
     }
 
-    if(issues){
+    if(filteredIssues){
       let sortDetails = JSON.parse(sortMap.get(sortBy));
 
-      issues.sort(function(a,b) {
+      filteredIssues.sort(function(a,b) {
           if(sortDetails.direction === 'ab'){
             if(sortDetails.isDate){
               return new Date(a[sortDetails.field]) - new Date(b[sortDetails.field]);
@@ -173,7 +204,7 @@ class IssueList extends Component {
             }
           }
       })
-      this.setState({filteredIssues: issues});
+      this.setState({issues: filteredIssues});
     }
   }
 
@@ -182,6 +213,33 @@ class IssueList extends Component {
                     {buttonLabel} <div className="IssueList-headerItemArrow" />
                   </button>
     return button
+  }
+
+  handleOpenCloseClick = (button) => {
+    if(button && button !== this.state.showingOpenClosed){
+      this.setState({showingOpenClosed: button});
+
+      this.processFilter(this.state.currentFilter);
+    }
+  }
+
+  countOpenClosed(issues) {
+    let issuesToCount;
+
+    if(issues){
+      issuesToCount = issues;
+    } else if(!!this.state.issues){
+      issuesToCount = this.state.issues;
+    } else{
+      issuesToCount = this.state.originalIssues;
+    }
+    if(issuesToCount){
+      let openCount = issuesToCount.filter(item => item.state === 'open').length
+      let closedCount = issuesToCount.filter(item => item.state === 'closed').length
+
+      this.setState({openIssuesCount: openCount});
+      this.setState({closedIssuesCount: closedCount});
+    }
   }
 
   render() {
@@ -248,13 +306,13 @@ class IssueList extends Component {
     return (
       <div className='IssueList-mainContainer'>
         <div className="IssueList-header">
-          <button className="IssueList-headerItem" onClick={() => this.processFilter({type: 'Open/Closed', criteria : 'open'})}>
+          <button className="IssueList-headerItem" onClick={() => this.handleOpenCloseClick('open')}>
             <svg viewBox="0 0 14 16" version="1.1" width="14" height="16"><path d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg>
-              {this.state.originalIssues.filter(item => item.state === 'open').length} Open
+              {this.state.openIssuesCount} Open
           </button>
-          <button className="IssueList-headerItem" onClick={() => this.processFilter({type: 'Open/Closed', criteria : 'closed'})}>
+          <button className="IssueList-headerItem" onClick={() => this.handleOpenCloseClick('closed')}>
             <svg viewBox="0 0 12 16" version="1.1" width="12" height="16" ><path d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path></svg>
-              {this.state.originalIssues.filter(item => item.state === 'closed').length} Closed 
+              {this.state.closedIssuesCount} Closed
           </button>
           <div className="IssueList-headerItemSpacer" />
           {authorButton}
