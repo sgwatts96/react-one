@@ -47,6 +47,7 @@ button {
   outline: none;
   text-decoration: none;
   font-weight: normal;
+  height: 3rem;
   cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
