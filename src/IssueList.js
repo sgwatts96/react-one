@@ -95,7 +95,7 @@ class IssueList extends Component {
     let arrayToReturn = [];
     
     data.map(item => {
-      if(!ids.has(item.id)){
+      if(item && item.Id && !ids.has(item.id)){
         ids.add(item.id);
         arrayToReturn.push(item);
       }
@@ -126,38 +126,53 @@ class IssueList extends Component {
       let issues = this.state.originalIssues.filter(item => item.state === this.state.showingOpenClosed);
       filteredIssues = [];
       issues.map(item => {
+        if(data.criteria === 'Unlabeled' && item.labels && item.labels.length === 0){
+          filteredIssues.push(item);
+        } else{
         let containsLabel = false;
-        if(item.labels){
-          item.labels.map(label =>{
-            if(label.id === data.criteria){
-              containsLabel = true;
+          if(item.labels){
+            item.labels.map(label =>{
+              if(label.id === data.criteria){
+                containsLabel = true;
+              }
+            })
+            if(containsLabel){
+              filteredIssues.push(item);
             }
-          })
-          if(containsLabel){
-            filteredIssues.push(item);
           }
         }
-
       })
     } else if(data.type === 'milestone'){
       let issues = this.state.originalIssues
-      filteredIssues = issues.filter(item => item.milestone.id === data.criteria && item.state === this.state.showingOpenClosed);
+      if(data.criteria === 'Issues with no milestone'){
+        filteredIssues = [];
+        issues.map(issue =>{
+          if(!issue.hasOwnProperty('milestone')){
+            filteredIssues.push(issue);
+          }
+        })
+      }else{
+        filteredIssues = issues.filter(item => item.milestone.id === data.criteria && item.state === this.state.showingOpenClosed);
+      }
     } else if(data.type === 'assignee'){
       let issues = this.state.originalIssues.filter(item => item.state === this.state.showingOpenClosed);
       filteredIssues = [];
       issues.map(item => {
-        let containsAssignee = false;
-        if(item.assignees){
-          item.assignees.map(assignee =>{
-            if(assignee.id === data.criteria){
-              containsAssignee = true;
+        if(data.criteria === 'Assigned to nobody' && !item.hasOwnProperty('assignee')){
+          filteredIssues.push(item);
+        }else{
+          let containsAssignee = false;
+          if(item.assignees){
+            item.assignees.map(assignee =>{
+              if(assignee.id === data.criteria){
+                containsAssignee = true;
+              }
+            })
+            if(containsAssignee){
+              filteredIssues.push(item);
             }
-          })
-          if(containsAssignee){
-            filteredIssues.push(item);
           }
         }
-
       })
     } else{
       filteredIssues = this.state.originalIssues;
