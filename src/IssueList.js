@@ -162,7 +162,7 @@ class IssueList extends Component {
     } else{
       filteredIssues = this.state.originalIssues;
     }
-console.log('in process filter: ' + filteredIssues.length)
+
     this.setState({issues: filteredIssues, openClosedIssues: ocIssues});
     this.countOpenClosed(filteredIssues);
 
