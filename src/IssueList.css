@@ -67,3 +67,8 @@ button:active {
   transform: translateY(.15rem);
   padding-right: .5rem;
 }
+
+.IssueList-headerItemSelected {
+  color: black;
+  font-weight: 600;
+}
