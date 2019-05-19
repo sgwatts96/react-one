@@ -10,7 +10,6 @@
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
     margin-right: 0;
-    z-index: -1;
     position: relative;
 }
 
@@ -19,9 +18,10 @@
    text-decoration: none;
 }
 
-.Issue-container a:hover{
-    color: blue;
-    fill: blue;
+.Issue-container a:hover,
+.Issue-container a:focus{
+    color:#0366d6;
+    fill: #0366d6;
 }
 
 .Issue-title{
