@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     align-items:flex-start;
+    flex-wrap: wrap;
     padding-left: .7rem;
     padding-right: .7rem;
     line-height: .2rem;
@@ -9,6 +10,7 @@
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
     margin-right: 0;
+    position: relative;
 }
 
 .Issue-container a{
@@ -16,9 +18,10 @@
    text-decoration: none;
 }
 
-.Issue-container a:hover{
-    color: blue;
-    fill: blue;
+.Issue-container a:hover,
+.Issue-container a:focus{
+    color:#0366d6;
+    fill: #0366d6;
 }
 
 .Issue-title{
@@ -57,13 +60,14 @@
 .Issue-commentsSection{
     flex-direction: row;
     flex-grow: .5;
-    align-self: flex-end;
+    align-self: flex-start;
     line-height: 3rem;
     text-align: right;
+    font-size: .85rem;
 }
 
 .Issue-commentsSection svg{
-    transform: translateY(-.4rem);
+    transform: translateY(.1rem);
     padding-right: .1rem;
 }
 
