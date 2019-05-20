@@ -19,6 +19,11 @@
 
 .Author-default{
 	padding-left: 1.25rem;
+	font-weight: 600;
+}
+
+.Author-sortDefault{
+	padding-left: 1.25rem;
 }
 
 .Author-selected{
