@@ -13,10 +13,15 @@
 	padding-top: .3rem;
 	text-align: left;
 	font-size: .8rem;
+	width: 100%;
+	border-bottom: 1px solid #eaecef;
 }
 
 .Author-default{
-	padding-left: 1.5rem;
+	padding-left: 1.25rem;
+}
+
+.Author-selected{
 	font-weight: 600;
 }
 
@@ -89,7 +94,7 @@
 .Author-searchButton {
 	display: inline-flex;
 	align-items: center;
-	height: 3rem;
+	height: 2.25rem;
 	padding-top: .3rem;
 	text-align: left;
 	font-size: .8rem;

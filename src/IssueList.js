@@ -75,15 +75,8 @@ class IssueList extends Component {
         return issue.milestone
       })
     } else if(dataType === 'Assignee'){
-      issues.map(issue => {
-        if(issue.assignees){
-          return issue.assignees.map(assignee => {
-            defaultData.push(assignee);
-            return null;
-          })
-        } else{
-          return null;
-        }
+      defaultData = issues.map(issue => {
+        return issue.assignee;
       })
     }
     return this.dedupeArray(defaultData);
@@ -95,7 +88,7 @@ class IssueList extends Component {
     let arrayToReturn = [];
     
     data.map(item => {
-      if(item && item.Id && !ids.has(item.id)){
+      if(item && !ids.has(item.id)){
         ids.add(item.id);
         arrayToReturn.push(item);
       }
