@@ -41,7 +41,7 @@ class Author extends Component {
 				})
 			} else if(this.state.type === 'label'){
 				return issues.map(label => {
-					return 	<button className="Author-item Author-searchButton" key={label.id} onClick={()=>this.handleClick(label.id)}><span className="Author-itemLabel" style={{'backgroundColor': '#' + label.color}}/><span>{label.name}</span></button>
+					return 	<button className="Author-item Author-searchButton Author-sortDefault" key={label.id} onClick={()=>this.handleClick(label.id)}><span className="Author-itemLabel" style={{'backgroundColor': '#' + label.color}}/><span>{label.name}</span></button>
 				})
 			} else if(this.state.type === 'milestone'){
 				return issues.map(milestone => {
