@@ -9,7 +9,7 @@ class Issue extends Component {
     return lables.map(label => {
       return <div className="Issue-label" key={label.id}>
           <div className="Issue-labelInner" style={{'backgroundColor': '#' + label.color}}>
-            Type: {label.name}
+            {label.name}
           </div>
       </div>
     })

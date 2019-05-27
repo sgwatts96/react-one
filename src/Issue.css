@@ -27,6 +27,8 @@
 .Issue-title{
     font-weight: bold;
     padding-top: .25rem;
+    max-width: calc( 100% * 2/3);
+    text-align: left;
 }
 
 .Issue-title a{
