@@ -31,6 +31,18 @@ class IssueList extends Component {
     this.countOpenClosed();
   }
 
+  componentDidUpdate(prevProps) {
+    if(this.props.issues !== prevProps.issues)
+    {
+      let openCount = this.props.issues.filter(item => item.state === 'open').length
+      let closedCount = this.props.issues.filter(item => item.state === 'closed').length
+      this.setState({ originalIssues: this.props.issues,
+                      issues: this.props.issues,
+                      openIssuesCount: openCount,
+                      closedIssuesCount: closedCount})
+    }
+  }
+
   createIssues = (issues) => {
     if(issues){
       return issues.map(issue => {
