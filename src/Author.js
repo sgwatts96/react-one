@@ -22,7 +22,7 @@ class Author extends Component {
 						filteredOptions: '',
 						type: this.props.type,
 						filterMap: filterCriteriaMap,
-						currentSort: 'oldest'};
+						currentSort: 'newest'};
 	}
 
 	processData() {
