@@ -72,3 +72,31 @@ button:active {
   color: black;
   font-weight: 600;
 }
+
+.IssueList-resetButton{
+  color: #586069;
+  text-align: left;
+  padding-left: 0;
+  margin-bottom: .5rem;
+}
+
+.IssueList-resetButton:hover{
+  color: #0366d6;
+  fill: #0366d6
+}
+
+.IssueList-resetButton:hover svg{
+  background-color: #0366d6;
+}
+
+.IssueList-resetButton svg {
+  background-color: #6a737d;
+  color: white;
+  border-radius: 3px;
+  width: 18px;
+  text-align: center;
+  margin-right: 3px;
+  height: 18px;
+  fill: white;
+  transform: translateY(.20rem);
+}

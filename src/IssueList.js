@@ -31,6 +31,18 @@ class IssueList extends Component {
     this.countOpenClosed();
   }
 
+  componentDidUpdate(prevProps) {
+    if(this.props.issues !== prevProps.issues)
+    {
+      let openCount = this.props.issues.filter(item => item.state === 'open').length
+      let closedCount = this.props.issues.filter(item => item.state === 'closed').length
+      this.setState({ originalIssues: this.props.issues,
+                      issues: this.props.issues,
+                      openIssuesCount: openCount,
+                      closedIssuesCount: closedCount})
+    }
+  }
+
   createIssues = (issues) => {
     if(issues){
       return issues.map(issue => {
@@ -230,6 +242,14 @@ class IssueList extends Component {
       this.processFilter(this.state.currentFilter);
     }
   }
+  
+  reset() {
+    this.countOpenClosed(this.state.originalIssues)
+
+    this.setState({ issues : this.state.originalIssues,
+                    showingOpenClosed: 'open',
+                    currentFilter: ''});
+  }
 
   countOpenClosed(issues) {
     let issuesToCount;
@@ -313,8 +333,12 @@ class IssueList extends Component {
 
     let openButtonStyle = (this.state.showingOpenClosed === 'open' ? 'IssueList-headerItem IssueList-headerItemSelected' : 'IssueList-headerItem');
     let closedButtonStyle = (this.state.showingOpenClosed === 'closed' ? 'IssueList-headerItem IssueList-headerItemSelected' : 'IssueList-headerItem');
+    
+    const resetButton = (this.state.currentFilter ? <button className='IssueList-resetButton' onClick={() => this.reset()}> <svg viewBox="0 0 12 16" version="1.1" width="12" height="16"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z"></path></svg>Clear current search query, filters, and sorts</button> : '')
+
     return (
       <div className='IssueList-mainContainer'>
+        {resetButton}
         <div className="IssueList-header">
           <button className={openButtonStyle} onClick={() => this.handleOpenCloseClick('open')}>
             <svg viewBox="0 0 14 16" version="1.1" width="14" height="16"><path d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg>

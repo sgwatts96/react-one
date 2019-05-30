@@ -33,3 +33,23 @@
     transform: rotate(360deg);
   }
 }
+
+.App-button {
+  color: white;
+  background-color: blue;
+  border-radius: 10px;
+  height: 1.5rem;
+  margin-left: 1rem;
+}
+
+.App-details {
+  padding-top: 1rem;
+  text-align: left;
+  padding-left: 13.5rem;
+}
+
+.App-input {
+  color: #586069;
+  margin-left: 1rem;
+  margin-right: .2rem;
+}

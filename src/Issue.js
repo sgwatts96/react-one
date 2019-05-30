@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Issue.css'
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 
 class Issue extends Component {
@@ -9,7 +9,7 @@ class Issue extends Component {
     return lables.map(label => {
       return <div className="Issue-label" key={label.id}>
           <div className="Issue-labelInner" style={{'backgroundColor': '#' + label.color}}>
-            Type: {label.name}
+            {label.name}
           </div>
       </div>
     })
@@ -17,7 +17,10 @@ class Issue extends Component {
 
   render() {
     const { issue } = this.props
-    const issueOpenTime = moment(issue.created_at, "YYYYMMDDhhmmss").fromNow();
+    const usertimezone = moment.tz.guess();
+    const value = moment.utc(new Date(issue.created_at));
+    const formatDate = moment.tz(value,usertimezone);
+    const momentDate = formatDate.fromNow();
     let hideShowComments;
     if(issue.comments >0){
       hideShowComments = 
@@ -34,11 +37,11 @@ class Issue extends Component {
         </div>
         <div className="Issue-cardInner">
           <div className="Issue-title">
-            <a href={issue.url}>{issue.title}</a>
+            <a href={issue.html_url}>{issue.title}</a>
             {this.getLabels(issue.labels)}
           </div>
           <div className="Issue-listDetails">
-            <p>#{issue.number} {issueOpenTime} by <a href={issue.user.url}>{issue.user.login}</a></p>
+            <p>#{issue.number} {momentDate} by <a href={issue.user.html_url}>{issue.user.login}</a></p>
           </div>
         </div>
         <div className="Issue-commentsSection">
